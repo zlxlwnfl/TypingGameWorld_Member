@@ -8,6 +8,6 @@ import reactor.core.publisher.Flux
 @Repository
 interface TestRepository: ReactiveMongoRepository<Test, String>{
 
-    fun findByName(name: String): Flux<Test>
+    fun findByMemberId(memberId: String): Flux<Test>
 
 }

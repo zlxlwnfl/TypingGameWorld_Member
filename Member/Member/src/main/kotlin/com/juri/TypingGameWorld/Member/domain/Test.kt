@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 class Test(
     @Id
     val id: String,
-    var name: String,
-    var message: String
+    var memberId: String,
+    var memberPassword: String
 )

@@ -16,7 +16,7 @@ open class MemberRouter(private val memberHandler: MemberHandler) {
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 memberHandler::helloWorld
             ).andRoute(
-            RequestPredicates.GET("/test/{name}/{message}").and(
+            RequestPredicates.POST("/test").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 memberHandler::mongodbTest
             )
