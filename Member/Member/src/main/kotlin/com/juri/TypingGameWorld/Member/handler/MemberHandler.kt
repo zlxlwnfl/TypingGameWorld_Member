@@ -1,7 +1,10 @@
 package com.juri.TypingGameWorld.Member.handler
 
+import com.juri.TypingGameWorld.Member.domain.Test
+import com.juri.TypingGameWorld.Member.repository.TestRepository
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -15,20 +18,38 @@ import java.util.function.Supplier
 
 @Slf4j
 @Component
-class MemberHandler {
+class MemberHandler(private val testRepo: TestRepository) {
 
     private val log = LoggerFactory.getLogger(MemberHandler::class.java)
 
     fun helloWorld(request: ServerRequest): Mono<ServerResponse> {
         log.info("method before")
-        val name = "juri"
-        val message = "hello world!"
+        val name = request.pathVariable("name")
+        val message = request.pathVariable("message")
         val result = ok().contentType(MediaType.APPLICATION_JSON)
             .body(Mono.fromSupplier(Supplier { Member.memberFactory(name, message) }))
             .switchIfEmpty(notFound().build())
         log.info("method after")
 
         return result
+    }
+
+    fun mongodbTest(request: ServerRequest): Mono<ServerResponse> {
+        log.info("method before")
+        val result = Mono.fromRunnable<Void>(
+            Runnable {
+                testRepo.save(Test("",
+                    request.pathVariable("name"),
+                    request.pathVariable("message"))).subscribe()
+                println("몽고디비에 데이터 삽입 완료")
+            }).then(
+            testRepo.findByName(request.pathVariable("name")).collectList()
+        )
+        log.info("method after")
+
+        return ok().contentType(MediaType.APPLICATION_JSON)
+            .body(result)
+            .switchIfEmpty(notFound().build())
     }
 
 }

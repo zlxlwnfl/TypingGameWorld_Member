@@ -12,9 +12,13 @@ open class MemberRouter(private val memberHandler: MemberHandler) {
     @Bean
     fun route(): RouterFunction<ServerResponse> {
         return RouterFunctions.route(
-            RequestPredicates.GET("/").and(
+            RequestPredicates.GET("/{name}/{message}").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 memberHandler::helloWorld
+            ).andRoute(
+            RequestPredicates.GET("/test/{name}/{message}").and(
+                RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                memberHandler::mongodbTest
             )
     }
 
