@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.server.ServerResponse.notFound
 import org.springframework.web.reactive.function.server.ServerResponse.ok
 import org.springframework.web.reactive.function.server.body
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
+import java.util.function.Supplier
 
 @Slf4j
 @Component
@@ -19,10 +21,13 @@ class MemberHandler {
 
     fun helloWorld(request: ServerRequest): Mono<ServerResponse> {
         log.info("method before")
+        val name = "juri"
+        val message = "hello world!"
         val result = ok().contentType(MediaType.APPLICATION_JSON)
-            .body<Member>(Mono.fromSupplier<Member>(Member::memberFactory))
+            .body(Mono.fromSupplier(Supplier { Member.memberFactory(name, message) }))
             .switchIfEmpty(notFound().build())
         log.info("method after")
+
         return result
     }
 
@@ -31,10 +36,10 @@ class MemberHandler {
 class Member(val name: String, val message: String) {
 
     companion object {
-        fun memberFactory(): Member {
+        fun memberFactory(name: String, message: String): Member {
             Thread.sleep(1000)
             println("create member")
-            return Member("juri", "hello world!")
+            return Member(name, message)
         }
     }
 }
