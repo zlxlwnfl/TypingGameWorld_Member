@@ -10,16 +10,11 @@ import org.springframework.web.reactive.function.server.*
 open class MemberRouter(private val memberHandler: MemberHandler) {
 
     @Bean
-    fun route(): RouterFunction<ServerResponse> {
-        return RouterFunctions.route(
-            RequestPredicates.GET("/{name}/{message}").and(
-                RequestPredicates.accept(MediaType.APPLICATION_JSON)),
-                memberHandler::helloWorld
-            ).andRoute(
+    fun route(): RouterFunction<ServerResponse> =
+        RouterFunctions.route(
             RequestPredicates.POST("/test").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 memberHandler::mongodbTest
             )
-    }
 
 }
