@@ -4,9 +4,9 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("test")
-class Test(
+data class Member(
     @Id
-    val id: String,
-    var memberId: String,
-    var memberPassword: String
+    val id: String = "",
+    val memberId: String,
+    val memberPassword: String
 )
