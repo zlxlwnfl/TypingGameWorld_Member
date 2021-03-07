@@ -25,7 +25,7 @@ class MemberHandlerTests {
 
     @Test
     fun joinSuccessTest() {
-        Mockito.`when`(memberService.saveMember(juriMember)).thenReturn(Mono.defer { Mono.just(juriMember) })
+        Mockito.`when`(memberService.saveMember(juriMember)).thenReturn(Mono.just(juriMember))
 
         webTestClient.post()
             .uri("/join")

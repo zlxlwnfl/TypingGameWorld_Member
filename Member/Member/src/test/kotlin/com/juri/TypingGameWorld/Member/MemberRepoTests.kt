@@ -5,22 +5,19 @@ import com.juri.TypingGameWorld.Member.repository.MemberRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
-import org.springframework.boot.test.context.SpringBootTest
 import reactor.test.StepVerifier
 
 @DataMongoTest
 class MemberRepoTests {
 
     @Autowired
-    lateinit var memberRepository: MemberRepository
+    lateinit var memberRepo: MemberRepository
 
     @BeforeEach
     fun init() {
-        memberRepository.deleteAll().block()
-        memberRepository.saveAll(
+        memberRepo.deleteAll().block()
+        memberRepo.saveAll(
             mutableListOf(
                 Member(memberId = "juri", memberPassword = "1"),
                 Member(memberId = "sawual", memberPassword = "2"),
@@ -31,7 +28,7 @@ class MemberRepoTests {
 
     @Test
     fun repoFindByMemberIdSuccessTest() {
-        StepVerifier.create(memberRepository.findByMemberId("juri"))
+        StepVerifier.create(memberRepo.findByMemberId("juri"))
             .assertNext {
                 assert(it.memberId == "juri")
                 assert(it.memberPassword == "1")
@@ -41,14 +38,14 @@ class MemberRepoTests {
 
     @Test
     fun repoFindByMemberIdFailureTest() {
-        StepVerifier.create(memberRepository.findByMemberId("minsu"))
+        StepVerifier.create(memberRepo.findByMemberId("minsu"))
             .expectNextCount(0)
             .verifyComplete()
     }
 
     @Test
     fun repoFindByMemberIdAndMemberPasswordSuccessTest() {
-        StepVerifier.create(memberRepository.findByMemberIdAndMemberPassword("juri", "1"))
+        StepVerifier.create(memberRepo.findByMemberIdAndMemberPassword("juri", "1"))
             .assertNext {
                 assert(it.memberId == "juri")
                 assert(it.memberPassword == "1")
@@ -58,7 +55,7 @@ class MemberRepoTests {
 
     @Test
     fun repoFindByMemberIdAndMemberPasswordFilureTest() {
-        StepVerifier.create(memberRepository.findByMemberIdAndMemberPassword("minsu", "1"))
+        StepVerifier.create(memberRepo.findByMemberIdAndMemberPassword("minsu", "1"))
             .expectNextCount(0)
             .verifyComplete()
     }
