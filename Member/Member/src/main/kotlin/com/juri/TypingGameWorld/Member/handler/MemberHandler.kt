@@ -15,21 +15,19 @@ import reactor.kotlin.core.publisher.toMono
 
 @Component
 class MemberHandler(private val memberSerivce: MemberService) {
-
-    private val log = LoggerFactory.getLogger(MemberHandler::class.java)
-
+    
     fun join(request: ServerRequest): Mono<ServerResponse> =
         request.bodyToMono(Member::class.java)
             .flatMap(memberSerivce::saveMember)
             .flatMap {
-                accepted().contentType(MediaType.APPLICATION_JSON).build()
+                accepted().build()
             }
 
     fun login(request: ServerRequest): Mono<ServerResponse> =
         request.bodyToMono(Member::class.java)
             .flatMap(memberSerivce::findMember)
             .flatMap {
-                ok().contentType(MediaType.APPLICATION_JSON).build()
+                ok().build()
             }.switchIfEmpty(status(HttpStatus.NOT_FOUND).build())
 
     fun duplicateIdCheck(request: ServerRequest): Mono<ServerResponse> =
