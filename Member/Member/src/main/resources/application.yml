@@ -1,4 +1,9 @@
 
+# JAVA
+java:
+  net:
+    preferIPv4Stack: true
+
 # MongoDB
 spring:
   data:
