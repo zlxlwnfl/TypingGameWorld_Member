@@ -6,11 +6,17 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate
+import org.springframework.data.mongodb.core.count
+import org.springframework.data.mongodb.core.dropCollection
+import org.springframework.test.context.event.annotation.AfterTestClass
 import reactor.test.StepVerifier
 
 @DataMongoTest
 class MemberRepoTests {
 
+    @Autowired
+    lateinit var template: ReactiveMongoTemplate
     @Autowired
     lateinit var memberRepo: MemberRepository
 
@@ -24,6 +30,19 @@ class MemberRepoTests {
                 Member(memberId = "hyuk", memberPassword = "3")
             )
         ).blockLast()
+    }
+
+    @AfterTestClass
+    fun clean() = template.dropCollection<Member>().block()
+
+    @Test
+    fun repoCountTest() {
+        template.count<Member>()
+            .`as` { StepVerifier.create(it) }
+            .assertNext {
+                assert(it.equals(3.toLong()))
+            }
+            .verifyComplete()
     }
 
     @Test
