@@ -2,7 +2,6 @@ package com.juri.TypingGameWorld.Member.handler
 
 import com.juri.TypingGameWorld.Member.domain.Member
 import com.juri.TypingGameWorld.Member.service.MemberService
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
