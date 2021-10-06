@@ -24,8 +24,9 @@ class MemberServiceTests {
     private val juriMember: Member = Member(memberId = "juri", memberPassword = "1")
 
     @Test
-    fun saveMemberSuccessTest() {
-        Mockito.`when`(memberRepo.save(juriMember)).thenReturn(Mono.just(juriMember))
+    fun testSaveValidMember() {
+        Mockito.`when`(memberRepo.save(juriMember))
+            .thenReturn(Mono.just(juriMember))
 
         StepVerifier.create(memberService.saveMember(juriMember))
             .assertNext {
@@ -36,8 +37,9 @@ class MemberServiceTests {
     }
 
     @Test
-    fun findMemberSuccessTest() {
-        Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1")).thenReturn(Mono.just(juriMember))
+    fun testFindValidMember() {
+        Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1"))
+            .thenReturn(Mono.just(juriMember))
 
         StepVerifier.create(memberService.findMember(juriMember))
             .assertNext {
@@ -48,8 +50,9 @@ class MemberServiceTests {
     }
 
     @Test
-    fun findMemberFailureTest() {
-        Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1")).thenReturn(Mono.empty())
+    fun testFindInvalidMember() {
+        Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1"))
+            .thenReturn(Mono.empty())
 
         StepVerifier.create(memberService.findMember(juriMember))
             .expectNextCount(0)
@@ -57,8 +60,9 @@ class MemberServiceTests {
     }
 
     @Test
-    fun duplicateIdCheckTrueTest() {
-        Mockito.`when`(memberRepo.findByMemberId("juri")).thenReturn(Mono.just(juriMember))
+    fun testValidDuplicateIdCheck() {
+        Mockito.`when`(memberRepo.findByMemberId("juri"))
+            .thenReturn(Mono.just(juriMember))
 
         StepVerifier.create(memberService.duplicateIdCheck("juri"))
             .assertNext {
@@ -68,8 +72,9 @@ class MemberServiceTests {
     }
 
     @Test
-    fun duplicateIdCheckFalseTest() {
-        Mockito.`when`(memberRepo.findByMemberId("juri")).thenReturn(Mono.empty())
+    fun testInvalidDuplicateIdCheck() {
+        Mockito.`when`(memberRepo.findByMemberId("juri"))
+            .thenReturn(Mono.empty())
 
         StepVerifier.create(memberService.duplicateIdCheck("juri"))
             .assertNext {

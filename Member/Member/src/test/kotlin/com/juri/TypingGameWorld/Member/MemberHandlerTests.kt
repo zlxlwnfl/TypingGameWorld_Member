@@ -24,8 +24,9 @@ class MemberHandlerTests {
     private val juriMember: Member = Member(memberId = "juri", memberPassword = "1")
 
     @Test
-    fun joinSuccessTest() {
-        Mockito.`when`(memberService.saveMember(juriMember)).thenReturn(Mono.just(juriMember))
+    fun testValidJoin() {
+        Mockito.`when`(memberService.saveMember(juriMember))
+            .thenReturn(Mono.just(juriMember))
 
         webTestClient.post()
             .uri("/join")
@@ -36,8 +37,9 @@ class MemberHandlerTests {
     }
 
     @Test
-    fun loginSuccessTest() {
-        Mockito.`when`(memberService.findMember(juriMember)).thenReturn(Mono.just(juriMember))
+    fun testValidLogin() {
+        Mockito.`when`(memberService.findMember(juriMember))
+            .thenReturn(Mono.just(juriMember))
 
         webTestClient.post()
             .uri("/login")
@@ -48,8 +50,9 @@ class MemberHandlerTests {
     }
 
     @Test
-    fun loginFailureTest() {
-        Mockito.`when`(memberService.findMember(juriMember)).thenReturn(Mono.empty())
+    fun testInvalidLogin() {
+        Mockito.`when`(memberService.findMember(juriMember))
+            .thenReturn(Mono.empty())
 
         webTestClient.post()
             .uri("/login")
@@ -60,8 +63,9 @@ class MemberHandlerTests {
     }
 
     @Test
-    fun idCheckSuccessTest() {
-        Mockito.`when`(memberService.duplicateIdCheck("juri")).thenReturn(Mono.just(true))
+    fun testValidIdCheck() {
+        Mockito.`when`(memberService.duplicateIdCheck("juri"))
+            .thenReturn(Mono.just(true))
 
         webTestClient.get()
             .uri("/check/juri")
@@ -73,8 +77,9 @@ class MemberHandlerTests {
     }
 
     @Test
-    fun idCheckFailureTest() {
-        Mockito.`when`(memberService.duplicateIdCheck("juri")).thenReturn(Mono.just(false))
+    fun testInvalidIdCheck() {
+        Mockito.`when`(memberService.duplicateIdCheck("juri"))
+            .thenReturn(Mono.just(false))
 
         webTestClient.get()
             .uri("/check/juri")
