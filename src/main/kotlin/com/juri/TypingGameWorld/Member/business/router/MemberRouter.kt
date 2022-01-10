@@ -1,6 +1,6 @@
-package com.juri.TypingGameWorld.Member.router
+package com.juri.TypingGameWorld.Member.business.router
 
-import com.juri.TypingGameWorld.Member.handler.MemberHandler
+import com.juri.TypingGameWorld.Member.business.handler.MemberHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType

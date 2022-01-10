@@ -1,6 +1,6 @@
-package com.juri.TypingGameWorld.Member.repository
+package com.juri.TypingGameWorld.Member.business.repository
 
-import com.juri.TypingGameWorld.Member.domain.Member
+import com.juri.TypingGameWorld.Member.business.domain.Member
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono

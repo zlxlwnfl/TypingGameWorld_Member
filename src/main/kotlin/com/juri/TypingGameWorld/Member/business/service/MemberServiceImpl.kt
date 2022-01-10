@@ -1,7 +1,7 @@
-package com.juri.TypingGameWorld.Member.service
+package com.juri.TypingGameWorld.Member.business.service
 
-import com.juri.TypingGameWorld.Member.domain.Member
-import com.juri.TypingGameWorld.Member.repository.MemberRepository
+import com.juri.TypingGameWorld.Member.business.domain.Member
+import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono

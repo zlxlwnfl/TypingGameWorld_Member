@@ -1,7 +1,7 @@
 package com.juri.TypingGameWorld.Member
 
-import com.juri.TypingGameWorld.Member.domain.Member
-import com.juri.TypingGameWorld.Member.repository.MemberRepository
+import com.juri.TypingGameWorld.Member.business.domain.Member
+import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory

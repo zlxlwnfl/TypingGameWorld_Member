@@ -1,4 +1,4 @@
-package com.juri.TypingGameWorld.Member.config
+package com.juri.TypingGameWorld.Member.global.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.config.CorsRegistry

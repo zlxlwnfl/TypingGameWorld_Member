@@ -1,7 +1,7 @@
-package com.juri.TypingGameWorld.Member.handler
+package com.juri.TypingGameWorld.Member.business.handler
 
-import com.juri.TypingGameWorld.Member.domain.Member
-import com.juri.TypingGameWorld.Member.service.MemberService
+import com.juri.TypingGameWorld.Member.business.domain.Member
+import com.juri.TypingGameWorld.Member.business.service.MemberService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component

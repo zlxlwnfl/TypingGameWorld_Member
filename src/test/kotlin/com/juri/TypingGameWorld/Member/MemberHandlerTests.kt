@@ -1,7 +1,7 @@
 package com.juri.TypingGameWorld.Member
 
-import com.juri.TypingGameWorld.Member.domain.Member
-import com.juri.TypingGameWorld.Member.service.MemberService
+import com.juri.TypingGameWorld.Member.business.domain.Member
+import com.juri.TypingGameWorld.Member.business.service.MemberService
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired

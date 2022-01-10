@@ -1,6 +1,6 @@
-package com.juri.TypingGameWorld.Member.service
+package com.juri.TypingGameWorld.Member.business.service
 
-import com.juri.TypingGameWorld.Member.domain.Member
+import com.juri.TypingGameWorld.Member.business.domain.Member
 import reactor.core.publisher.Mono
 
 interface MemberService {
