@@ -1,21 +1,12 @@
 package com.juri.TypingGameWorld.Member
 
-import com.juri.TypingGameWorld.Member.business.domain.Member
-import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
-import com.juri.TypingGameWorld.Member.business.service.MemberService
-import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import reactor.core.publisher.Mono
-import reactor.test.StepVerifier
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureDataMongo
 class MemberServiceTests {
-
+/*
     @Autowired
     lateinit var memberService: MemberService
 
@@ -82,5 +73,5 @@ class MemberServiceTests {
             }
             .verifyComplete()
     }
-
+*/
 }

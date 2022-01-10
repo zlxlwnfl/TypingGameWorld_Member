@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @SpringBootApplication
 @EnableReactiveMongoAuditing
 @EnableReactiveMongoRepositories
-open class MemberApplication
+class MemberApplication
 
 fun main(args: Array<String>) {
 	runApplication<MemberApplication>(*args)

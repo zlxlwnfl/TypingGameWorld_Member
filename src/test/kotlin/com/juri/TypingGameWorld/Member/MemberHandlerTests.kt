@@ -1,22 +1,12 @@
 package com.juri.TypingGameWorld.Member
 
-import com.juri.TypingGameWorld.Member.business.domain.Member
-import com.juri.TypingGameWorld.Member.business.service.MemberService
-import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.http.MediaType
-import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import reactor.core.publisher.Mono
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 class MemberHandlerTests {
-
+/*
     @Autowired
     lateinit var webTestClient: WebTestClient
     @MockBean
@@ -89,5 +79,5 @@ class MemberHandlerTests {
             .expectBody<Boolean>()
             .isEqualTo(false)
     }
-
+*/
 }

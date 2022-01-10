@@ -1,21 +1,10 @@
 package com.juri.TypingGameWorld.Member
 
-import com.juri.TypingGameWorld.Member.business.domain.Member
-import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate
-import org.springframework.data.mongodb.core.count
-import org.springframework.data.mongodb.core.dropCollection
-import org.springframework.test.context.event.annotation.AfterTestClass
-import reactor.test.StepVerifier
 
 @DataMongoTest
 class MemberRepoTests {
-
+/*
     private val log = LoggerFactory.getLogger(MemberRepoTests::class.java)
 
     @Autowired
@@ -83,5 +72,5 @@ class MemberRepoTests {
             .expectNextCount(0)
             .verifyComplete()
     }
-
+*/
 }

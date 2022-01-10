@@ -10,25 +10,40 @@ import org.springframework.web.reactive.function.server.RouterFunctions
 import org.springframework.web.reactive.function.server.ServerResponse
 
 @Configuration
-open class MemberRouter(private val memberHandler: MemberHandler) {
+class MemberRouter(private val memberHandler: MemberHandler) {
 
     @Bean
     fun route(): RouterFunction<ServerResponse> =
         RouterFunctions.route(
-            RequestPredicates.POST("/join").and(
+            RequestPredicates.POST("/members").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)
             ),
-            memberHandler::join
+            memberHandler::saveMember
         ).andRoute(
-            RequestPredicates.POST("/login").and(
+            RequestPredicates.DELETE("/members/{memberId}").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)
             ),
-            memberHandler::login
+            memberHandler::deleteMember
         ).andRoute(
-            RequestPredicates.GET("/check/{id}").and(
+            RequestPredicates.GET("/members/{memberId}").and(
                 RequestPredicates.accept(MediaType.APPLICATION_JSON)
             ),
-            memberHandler::duplicateIdCheck
+            memberHandler::findMemberByMemberId
+        ).andRoute(
+            RequestPredicates.GET("/members/{bestGame}").and(
+                RequestPredicates.accept(MediaType.APPLICATION_JSON)
+            ),
+            memberHandler::findMembersByBestGame
+        ).andRoute(
+            RequestPredicates.PUT("/members/{memberId}").and(
+                RequestPredicates.accept(MediaType.APPLICATION_JSON)
+            ),
+            memberHandler::updateBestGame
+        ).andRoute(
+            RequestPredicates.DELETE("/members/{memberId}").and(
+                RequestPredicates.accept(MediaType.APPLICATION_JSON)
+            ),
+            memberHandler::deleteBestGame
         )
 
 }

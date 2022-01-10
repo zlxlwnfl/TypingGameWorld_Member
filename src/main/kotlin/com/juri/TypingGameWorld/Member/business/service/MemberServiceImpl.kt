@@ -1,11 +1,11 @@
 package com.juri.TypingGameWorld.Member.business.service
 
-import com.juri.TypingGameWorld.Member.business.domain.Member
+import com.juri.TypingGameWorld.Member.business.dto.MemberDTO
+import com.juri.TypingGameWorld.Member.business.entity.Member
 import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.switchIfEmpty
 import reactor.kotlin.core.publisher.toMono
 
 @Service
@@ -13,30 +13,39 @@ class MemberServiceImpl(private val memberRepo: MemberRepository) : MemberServic
 
     private val log = LoggerFactory.getLogger(MemberServiceImpl::class.java)
 
-    override fun saveMember(member: Member): Mono<Member> =
-        member?.toMono().flatMap {
-            log.info("저장 시도 : ${it.memberId} ${it.memberPassword}")
-            memberRepo.save(it)
-        }
+    override fun saveMember(memberRequest: MemberDTO.Request): Mono<Member> =
+        memberRequest.toMono()
+            .flatMap {
+                val member = Member(memberId = it.memberId)
+                val savedMember = memberRepo.save(member)
 
-    override fun findMember(member: Member): Mono<Member> =
-        member?.toMono().flatMap {
-            log.info("조회 시도 : ${it.memberId} ${it.memberPassword}")
-            memberRepo.findByMemberIdAndMemberPassword(it.memberId, it.memberPassword)
-                .switchIfEmpty {
-                    Mono.empty()
-                }
-        }
+                log.info("Member 저장 : ${it.memberId}")
 
-    override fun duplicateIdCheck(memberId: String): Mono<Boolean> =
-        memberId?.toMono().flatMap { memberId ->
-            log.info("아이디 중복 조회 시도 : $memberId")
-            memberRepo.findByMemberId(memberId)
-                .flatMap {
-                    Mono.just(true)
-                }.switchIfEmpty {
-                    Mono.just(false)
-                }
-        }
+                savedMember
+            }
+
+    override fun deleteMember(memberId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun findMemberByMemberId(memberId: String): Mono<Member> {
+        TODO("Not yet implemented")
+    }
+
+    override fun findMembersByBestGame(bestGame: String): Mono<List<Member>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateBestGame(memberId: String, bestGame: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteBestGame(memberId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateGameScores(memberId: String, gameName: String, gameScore: Int) {
+        TODO("Not yet implemented")
+    }
 
 }
