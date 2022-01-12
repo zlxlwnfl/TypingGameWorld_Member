@@ -13,7 +13,7 @@ class MemberServiceImpl(private val memberRepo: MemberRepository) : MemberServic
 
     private val log = LoggerFactory.getLogger(MemberServiceImpl::class.java)
 
-    override fun saveMember(memberRequest: MemberDTO.Request): Mono<Member> =
+    override fun saveMember(memberRequest: MemberDTO.Request): Mono<MemberDTO.Response> =
         memberRequest.toMono()
             .flatMap {
                 val member = Member(memberId = it.memberId)
@@ -22,17 +22,19 @@ class MemberServiceImpl(private val memberRepo: MemberRepository) : MemberServic
                 log.info("Member 저장 : ${it.memberId}")
 
                 savedMember
+            }.flatMap {
+                MemberDTO.Response.fromMember(it).toMono()
             }
 
     override fun deleteMember(memberId: String) {
         TODO("Not yet implemented")
     }
 
-    override fun findMemberByMemberId(memberId: String): Mono<Member> {
+    override fun findMemberByMemberId(memberId: String): Mono<MemberDTO.Response> {
         TODO("Not yet implemented")
     }
 
-    override fun findMembersByBestGame(bestGame: String): Mono<List<Member>> {
+    override fun findMembersByBestGame(bestGame: String): Mono<List<MemberDTO.Response>> {
         TODO("Not yet implemented")
     }
 
