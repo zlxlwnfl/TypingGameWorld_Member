@@ -1,4 +1,4 @@
-package com.juri.TypingGameWorld.Member
+package com.juri.TypingGameWorld.Member.tests
 
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 
