@@ -1,31 +1,59 @@
-package com.juri.TypingGameWorld.Member
+package com.juri.TypingGameWorld.Member.tests
 
+import com.juri.TypingGameWorld.Member.business.dto.MemberDTO
+import com.juri.TypingGameWorld.Member.business.service.MemberService
+import com.juri.TypingGameWorld.Member.config.MockDefaultConfiguration
+import com.juri.TypingGameWorld.Member.config.MockRepoConfiguration
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
+import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.test.web.reactive.server.WebTestClient
+import reactor.core.publisher.Mono
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
+@Import(*[
+    MockDefaultConfiguration::class,
+    MockRepoConfiguration::class
+])
 class MemberHandlerTests {
-/*
+
     @Autowired
     lateinit var webTestClient: WebTestClient
     @MockBean
     lateinit var memberService: MemberService
-    private val juriMember: Member = Member(memberId = "juri", memberPassword = "1")
+
+    private val MEMBER_ID: String = "test"
+
+    private val testValidMemberRequest : MemberDTO.Request = MemberDTO.Request(
+        memberId = MEMBER_ID
+    )
+    private val testValidMemberResponse : MemberDTO.Response = MemberDTO.Response(
+        memberId = MEMBER_ID,
+        bestGame = "",
+        gameScores = mapOf()
+    )
 
     @Test
-    fun testValidJoin() {
-        Mockito.`when`(memberService.saveMember(juriMember))
-            .thenReturn(Mono.just(juriMember))
+    fun testSaveMemberSuccessWithValidMemberRequest() {
+        Mockito.`when`(memberService.saveMember(testValidMemberRequest))
+            .thenReturn(Mono.just(testValidMemberResponse))
 
         webTestClient.post()
-            .uri("/join")
-            .bodyValue(juriMember)
-            .accept(MediaType.APPLICATION_JSON)
+            .uri("/members")
+            .bodyValue(testValidMemberRequest)
+            .accept(APPLICATION_JSON)
             .exchange()
-            .expectStatus().isAccepted
+            .expectStatus().isCreated
+            .expectHeader()
+            .location("/members/${MEMBER_ID}")
     }
-
+/*
     @Test
     fun testValidLogin() {
         Mockito.`when`(memberService.findMember(juriMember))

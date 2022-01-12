@@ -1,38 +1,55 @@
-package com.juri.TypingGameWorld.Member
+package com.juri.TypingGameWorld.Member.tests
 
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
+import com.juri.TypingGameWorld.Member.business.dto.MemberDTO
+import com.juri.TypingGameWorld.Member.business.entity.Member
+import com.juri.TypingGameWorld.Member.business.repository.MemberRepository
+import com.juri.TypingGameWorld.Member.business.service.MemberService
+import com.juri.TypingGameWorld.Member.config.MockDefaultConfiguration
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureDataMongo
+@Import(MockDefaultConfiguration::class)
 class MemberServiceTests {
-/*
+
     @Autowired
     lateinit var memberService: MemberService
-
     @MockBean
     lateinit var memberRepo: MemberRepository
-    private val juriMember: Member = Member(memberId = "juri", memberPassword = "1")
+
+    private val MEMBER_ID: String = "test"
+
+    private val testMember: Member = Member(
+        memberId = MEMBER_ID
+    )
+    private val testValidMemberRequest : MemberDTO.Request = MemberDTO.Request(
+        memberId = MEMBER_ID
+    )
 
     @Test
-    fun testSaveValidMember() {
-        Mockito.`when`(memberRepo.save(juriMember))
-            .thenReturn(Mono.just(juriMember))
+    fun testSaveMemberSuccessWithValidMemberRequest() {
+        Mockito.`when`(memberRepo.save(testMember))
+            .thenReturn(Mono.just(testMember))
 
-        StepVerifier.create(memberService.saveMember(juriMember))
+        StepVerifier.create(memberService.saveMember(testValidMemberRequest))
             .assertNext {
-                assert(it.memberId == "juri")
-                assert(it.memberPassword == "1")
+                assert(it.memberId == MEMBER_ID)
             }
             .verifyComplete()
     }
-
+/*
     @Test
     fun testFindValidMember() {
         Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1"))
-            .thenReturn(Mono.just(juriMember))
+            .thenReturn(Mono.just(testMember))
 
-        StepVerifier.create(memberService.findMember(juriMember))
+        StepVerifier.create(memberService.findMember(testMember))
             .assertNext {
                 assert(it.memberId == "juri")
                 assert(it.memberPassword == "1")
@@ -45,7 +62,7 @@ class MemberServiceTests {
         Mockito.`when`(memberRepo.findByMemberIdAndMemberPassword("juri", "1"))
             .thenReturn(Mono.empty())
 
-        StepVerifier.create(memberService.findMember(juriMember))
+        StepVerifier.create(memberService.findMember(testMember))
             .expectNextCount(0)
             .verifyComplete()
     }
@@ -53,7 +70,7 @@ class MemberServiceTests {
     @Test
     fun testValidDuplicateIdCheck() {
         Mockito.`when`(memberRepo.findByMemberId("juri"))
-            .thenReturn(Mono.just(juriMember))
+            .thenReturn(Mono.just(testMember))
 
         StepVerifier.create(memberService.duplicateIdCheck("juri"))
             .assertNext {
