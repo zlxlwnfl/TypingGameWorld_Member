@@ -26,25 +26,47 @@ class MemberServiceImpl(private val memberRepo: MemberRepository) : MemberServic
                 MemberDTO.Response.fromMember(it).toMono()
             }
 
-    override fun deleteMember(memberId: String) {
-        TODO("Not yet implemented")
-    }
+    override fun deleteMember(memberId: String): Mono<Void> =
+        memberId.toMono()
+            .flatMap {
+                memberRepo.deleteById(memberId)
+            }
 
-    override fun findMemberByMemberId(memberId: String): Mono<MemberDTO.Response> {
-        TODO("Not yet implemented")
-    }
+    override fun findMemberByMemberId(memberId: String): Mono<MemberDTO.Response> =
+        memberId.toMono()
+            .flatMap {
+                memberRepo.findByMemberId(it)
+            }.flatMap {
+                MemberDTO.Response.fromMember(it).toMono()
+            }
 
-    override fun findMembersByBestGame(bestGame: String): Mono<List<MemberDTO.Response>> {
-        TODO("Not yet implemented")
-    }
+    override fun findMembersByBestGame(bestGame: String): Mono<List<MemberDTO.Response>> =
+        bestGame.toMono()
+            .flatMapMany {
+                memberRepo.findByBestGame(it)
+            }.flatMap {
+                MemberDTO.Response.fromMember(it).toMono()
+            }.collectList()
 
-    override fun updateBestGame(memberId: String, bestGame: String) {
-        TODO("Not yet implemented")
-    }
+    override fun updateBestGame(memberId: String, bestGame: String): Mono<MemberDTO.Response> =
+        memberId.toMono()
+            .flatMap {
+                memberRepo.findByMemberId(it)
+            }.flatMap {
+                it.also {
+                    it.bestGame = bestGame
+                }
 
-    override fun deleteBestGame(memberId: String) {
-        TODO("Not yet implemented")
-    }
+                memberRepo.save(it)
+            }.flatMap {
+                MemberDTO.Response.fromMember(it).toMono()
+            }
+
+    override fun deleteBestGame(memberId: String): Mono<Void> =
+        memberId.toMono()
+            .flatMap {
+                memberRepo.deleteById(memberId)
+            }
 
     override fun updateGameScores(memberId: String, gameName: String, gameScore: Int) {
         TODO("Not yet implemented")

@@ -9,7 +9,7 @@ data class Member(
     @Id
     val id: String = "",
     val memberId: String,
-    val bestGame: String = "",
+    var bestGame: String = "",
     val gameScores: Map<String, Int> = mapOf()
 
 )
